@@ -1,3 +1,0 @@
-variable "resourceGroupName" {}
-variable "dbsWorkspaceName" {}
-
