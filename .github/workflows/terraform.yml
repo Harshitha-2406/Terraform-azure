@@ -23,16 +23,17 @@ jobs:
     - name: 'Az CLI login'
       uses: azure/login@v1
       with:
-        creds: AZURE_CLIENT_ID: '${{ secrets.AZURE_CLIENT_ID }}'
-               AZURE_CLIENT_SECRET: '${{ secrets.AZURE_CLIENT_SECRET }}'
-               AZURE_CONTAINER_NAME: '${{ secrets.AZURE_CONTAINER_NAME }}'
-               AZURE_STORAGE_ACCESS_KEY: '${{ secrets.AZURE_STORAGE_ACCESS_KEY }}'
-               AZURE_STORAGE_ACCOUNT_NAME: '${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}'
-               AZURE_SUBSCRIPTION_ID: '${{ secrets.AZURE_SUBSCRIPTION_ID }}'
-               AZURE_TENANT_ID: '${{ secrets.AZURE_TENANT_ID }}'
-               DATABRICKS_ACCOUNT_ID: '${{ secrets.DATABRICKS_ACCOUNT_ID }}'
-               DATABRICKS_ACCOUNT_PASSWORD: '${{ secrets.DATABRICKS_ACCOUNT_PASSWORD }}'
-               DATABRICKS_ACCOUNT_USERNAME: '${{ secrets.DATABRICKS_ACCOUNT_USERNAME }}'
+        AZURE_CLIENT_ID: '${{ secrets.AZURE_CLIENT_ID }}'
+        AZURE_CLIENT_SECRET: '${{ secrets.AZURE_CLIENT_SECRET }}'
+        AZURE_CONTAINER_NAME: '${{ secrets.AZURE_CONTAINER_NAME }}'
+        AZURE_STORAGE_ACCESS_KEY: '${{ secrets.AZURE_STORAGE_ACCESS_KEY }}'
+        AZURE_STORAGE_ACCOUNT_NAME: '${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}'
+        AZURE_SUBSCRIPTION_ID: '${{ secrets.AZURE_SUBSCRIPTION_ID }}'
+        AZURE_TENANT_ID: '${{ secrets.AZURE_TENANT_ID }}'
+        DATABRICKS_ACCOUNT_ID: '${{ secrets.DATABRICKS_ACCOUNT_ID }}'
+        DATABRICKS_ACCOUNT_PASSWORD: '${{ secrets.DATABRICKS_ACCOUNT_PASSWORD }}'
+        DATABRICKS_ACCOUNT_USERNAME: '${{ secrets.DATABRICKS_ACCOUNT_USERNAME }}'
+
 
     - name: 'Run Azure CLI commands'
       run: |
@@ -76,16 +77,16 @@ jobs:
     - name: 'Az CLI login'
       uses: azure/login@v1
       with:
-        creds: AZURE_CLIENT_ID: '${{ secrets.AZURE_CLIENT_ID }}'
-               AZURE_CLIENT_SECRET: '${{ secrets.AZURE_CLIENT_SECRET }}'
-               AZURE_CONTAINER_NAME: '${{ secrets.AZURE_CONTAINER_NAME }}'
-               AZURE_STORAGE_ACCESS_KEY: '${{ secrets.AZURE_STORAGE_ACCESS_KEY }}'
-               AZURE_STORAGE_ACCOUNT_NAME: '${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}'
-               AZURE_SUBSCRIPTION_ID: '${{ secrets.AZURE_SUBSCRIPTION_ID }}'
-               AZURE_TENANT_ID: '${{ secrets.AZURE_TENANT_ID }}'
-               DATABRICKS_ACCOUNT_ID: '${{ secrets.DATABRICKS_ACCOUNT_ID }}'
-               DATABRICKS_ACCOUNT_PASSWORD: '${{ secrets.DATABRICKS_ACCOUNT_PASSWORD }}'
-               DATABRICKS_ACCOUNT_USERNAME: '${{ secrets.DATABRICKS_ACCOUNT_USERNAME }}'
+           AZURE_CLIENT_ID: '${{ secrets.AZURE_CLIENT_ID }}'
+           AZURE_CLIENT_SECRET: '${{ secrets.AZURE_CLIENT_SECRET }}'
+           AZURE_CONTAINER_NAME: '${{ secrets.AZURE_CONTAINER_NAME }}'
+           AZURE_STORAGE_ACCESS_KEY: '${{ secrets.AZURE_STORAGE_ACCESS_KEY }}'
+           AZURE_STORAGE_ACCOUNT_NAME: '${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}'
+           AZURE_SUBSCRIPTION_ID: '${{ secrets.AZURE_SUBSCRIPTION_ID }}'
+           AZURE_TENANT_ID: '${{ secrets.AZURE_TENANT_ID }}'
+           DATABRICKS_ACCOUNT_ID: '${{ secrets.DATABRICKS_ACCOUNT_ID }}'
+           DATABRICKS_ACCOUNT_PASSWORD: '${{ secrets.DATABRICKS_ACCOUNT_PASSWORD }}'
+           DATABRICKS_ACCOUNT_USERNAME: '${{ secrets.DATABRICKS_ACCOUNT_USERNAME }}'
 
     - name: Terraform Init
       run: terraform init -backend-config="storage_account_name=${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}" -backend-config="container_name=${{ secrets.AZURE_CONTAINER_NAME }}" -backend-config="access_key=${{ secrets.AZURE_STORAGE_ACCESS_KEY }}" -backend-config="key=authenticaterraformdev.tfstate"
