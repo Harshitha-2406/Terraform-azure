@@ -37,7 +37,7 @@ jobs:
         terraform_version: 1.1.0
 
     - name: Terraform Init
-      run: terraform init -backend-config="storage_account_name=${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}" -backend-config="container_name=${{ secrets.AZURE_CONTAINER_NAME }}" -backend-config="access_key=${{ secrets.AZURE_STORAGE_ACCESS_KEY }}" -backend-config="key=authenticaterraformdev.tfstate"
+      run: terraform init -backend-config="storage_account_name=${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}" -backend-config="container_name=${{ secrets.AZURE_CONTAINER_NAME }}" -backend-config="access_key=${{ secrets.AZURE_STORAGE_ACCESS_KEY }}" -backend-config="key=authenticadev.tfstate"
     # - name: Terraform state rm
     #   run: |
     #         terraform state rm 'module.edp-dev-infra-tf.databricks_grants.schema_grants["edp_dev_trusted-aha"]'     
@@ -68,7 +68,7 @@ jobs:
       with:
         creds: '${{ secrets.AZURE_CREDENTIALS }}'
     - name: Terraform Init
-      run: terraform init -backend-config="storage_account_name=${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}" -backend-config="container_name=${{ secrets.AZURE_CONTAINER_NAME }}" -backend-config="access_key=${{ secrets.AZURE_STORAGE_ACCESS_KEY }}" -backend-config="key=authenticaterraformdev.tfstate"
+      run: terraform init -backend-config="storage_account_name=${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}" -backend-config="container_name=${{ secrets.AZURE_CONTAINER_NAME }}" -backend-config="access_key=${{ secrets.AZURE_STORAGE_ACCESS_KEY }}" -backend-config="key=authenticadev.tfstate"
 
     - name: terraform fmt
       run: |
