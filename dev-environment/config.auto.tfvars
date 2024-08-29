@@ -1,6 +1,6 @@
 resourceGroupName       = "Authentica-rg"
 #resourceGroupNameShared = "mtech-databricks-terraform-dev"
-location                = "East US 2" 
+location                = "EastUS" 
 prefix                  = "authenctica"
 suffix                  = "dev"
 vnetRange               = ["10.100.4.0/23"]
