@@ -45,7 +45,7 @@ jobs:
     #         terraform state list
     - name: Terraform Plan
       run: |
-          terraform plan -out=tfplan -var-file=Terraform-azure/dev-environment/config.auto.tfvars
+          terraform plan -out=tfplan -var-file=Authentica_Solutions/dev-environment/config.auto.tfvars
   terraform:
     name: 'Terraform Apply'
     runs-on: ubuntu-latest
@@ -74,7 +74,7 @@ jobs:
     - name: Terraform Plan
       #run: terraform plan -out=tfplan -var-file=UnityCatalog.auto.tfvars
       run: |
-        terraform plan -out=tfplan -var-file=Terraform-azure/dev-environment/config.auto.tfvars
+        terraform plan -out=tfplan -var-file=Authentica_Solutions/dev-environment/config.auto.tfvars
 
     - name: Terraform Apply
       if: github.ref == 'refs/heads/dev'
