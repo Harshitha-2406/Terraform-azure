@@ -1,0 +1,83 @@
+name: 'Terraform Plan/Apply'
+
+on:
+  push:
+    branches:
+      - dev-new
+  pull_request:
+    branches:
+      - dev-new
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  terraform-init-plan:
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: 'Az CLI login'
+      uses: azure/login@v1
+      with:
+        creds: '${{ secrets.AZURE_CREDENTIALS }}'
+
+    - name: 'Run Azure CLI commands'
+      run: |
+        az account show
+        az group list
+        pwd 
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: 1.1.0
+
+    - name: Terraform Init
+      run: terraform init -backend-config="storage_account_name=${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}" -backend-config="container_name=${{ secrets.AZURE_CONTAINER_NAME }}" -backend-config="access_key=${{ secrets.AZURE_STORAGE_ACCESS_KEY }}" -backend-config="key=authenticaterraformdev.tfstate"
+    # - name: Terraform state rm
+    #   run: |
+    #         terraform state rm 'module.edp-dev-infra-tf.databricks_grants.schema_grants["edp_dev_trusted-aha"]'     
+    # - name: Terraform state list
+    #   run: |
+    #         terraform state list
+    - name: Terraform Plan
+    
+      run: |
+          terraform plan -out=tfplan -var-file=config.auto.tfvars
+  terraform:
+    name: 'Terraform Apply'
+    runs-on: ubuntu-latest
+    needs: terraform-init-plan
+    
+    environment: dev
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: 1.1.0
+    
+    - name: 'Az CLI login'
+      uses: azure/login@v1
+      with:
+        creds: '${{ secrets.AZURE_CREDENTIALS }}'
+    - name: Terraform Init
+      run: terraform init -backend-config="storage_account_name=${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}" -backend-config="container_name=${{ secrets.AZURE_CONTAINER_NAME }}" -backend-config="access_key=${{ secrets.AZURE_STORAGE_ACCESS_KEY }}" -backend-config="key=authenticaterraformdev.tfstate"
+
+    - name: terraform fmt
+      run: |
+          terraform fmt
+    - name: Terraform Plan
+      
+      #run: terraform plan -out=tfplan -var-file=UnityCatalog.auto.tfvars
+      run: |
+        terraform plan -out=tfplan -var-file=config.auto.tfvars
+
+    - name: Terraform Apply
+      if: github.ref == 'refs/heads/dev-new'
+      run: terraform apply -auto-approve tfplan
