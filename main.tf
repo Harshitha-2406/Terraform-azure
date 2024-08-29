@@ -1,11 +1,11 @@
-/*module "adls" {
+module "adls" {
   source            = "./Modules/7.storageAdls"
   prefix            = var.prefix
   suffix            = var.suffix
   location          = var.location
   resourceGroupName = var.resourceGroupName
 }
-*/
+
 # module "keyVault" {
 #   source            = "./../Modules/6.keyVault"
 #   prefix            = var.prefix
