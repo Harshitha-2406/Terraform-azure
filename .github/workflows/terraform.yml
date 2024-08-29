@@ -44,6 +44,7 @@ jobs:
     #   run: |
     #         terraform state list
     - name: Terraform Plan
+      working-directory: ./dev-environment
       run: |
           terraform plan -out=tfplan -var-file=config.auto.tfvars
   terraform:
@@ -72,6 +73,7 @@ jobs:
       run: |
           terraform fmt
     - name: Terraform Plan
+      working-directory: ./dev-environment
       #run: terraform plan -out=tfplan -var-file=UnityCatalog.auto.tfvars
       run: |
         terraform plan -out=tfplan -var-file=config.auto.tfvars
