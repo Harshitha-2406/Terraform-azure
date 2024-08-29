@@ -6,4 +6,3 @@ terraform {
     key                  = "authenticadev.tfstate"
   }
 }
-
