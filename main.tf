@@ -1,5 +1,5 @@
 module "adls" {
-  source            = "./../Modules/7.storageAdls"
+  source            = "./Modules/7.storageAdls"
   prefix            = var.prefix
   suffix            = var.suffix
   location          = var.location
@@ -14,7 +14,7 @@ module "adls" {
 # }
 
 module "vnet" {
-  source                  = "./../Modules/4.virtualNetwork"
+  source                  = "./Modules/4.virtualNetwork"
   prefix                  = var.prefix
   suffix                  = var.suffix
   location                = var.location
@@ -27,7 +27,7 @@ module "vnet" {
 
 
 module "dbsWorkspace" {
-  source              = "./../Modules/3.dbWorkspace"
+  source              = "./Modules/3.dbWorkspace"
   prefix              = var.prefix
   suffix              = var.suffix
   location            = var.location
@@ -73,7 +73,7 @@ module "dbsWorkspace" {
 # }
 
 module "dbsSharedCluster" {
-  source            = "./../Modules/5.dbClusters/shared"
+  source            = "./Modules/5.dbClusters/shared"
   prefix            = var.prefix
   suffix            = var.suffix
   #de_instancePoolId = module.dbsInstancePool.deClusterPoolId
@@ -111,7 +111,7 @@ module "dbsSharedCluster" {
  module "sqlWarehouse" {
   prefix     = var.prefix
   suffix     = var.suffix   
-  source     = "./../Modules/15.sqlWarehouse"
+  source     = "./Modules/15.sqlWarehouse"
   depends_on = [module.dbsWorkspace]
  }
 
@@ -129,7 +129,7 @@ module "dbsSharedCluster" {
 } */
 
 module "dbSecretScopes" {
-  source     = "./../Modules/14.secretScopes"
+  source     = "./Modules/14.secretScopes"
   depends_on = [module.dbsWorkspace]
 }
 
