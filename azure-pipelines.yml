@@ -1,0 +1,65 @@
+trigger:
+  batch: true
+  branches:
+    include:
+      - main
+pr:
+  autoCancel: true
+  branches:
+    include:
+      - main
+
+resources:
+  repositories:
+    - repository: self
+      fetchDepth: 0
+    - repository: devops-iac
+      type: github
+      name: AuthenticaTech/DevOps-IaC
+      ref: main
+      endpoint: AuthenticaTech
+
+name: $(Year:yy).$(Month).$(DayOfMonth).$(Rev:r)
+
+stages:
+
+  - stage: Initialize
+    displayName: Initialize Build
+    dependsOn: [ ]
+    jobs:
+      - job: Initialize_Build_Run
+        displayName : Initialize Build Run
+        pool:
+          
+          vmImage: 'ubuntu-latest'
+        steps:
+          - checkout: 'self'
+            displayName: "Checkout Source"
+            submodules: 'true'
+            fetchDepth: 0
+
+          - powershell: |
+              Write-Host "##vso[task.setvariable variable=internalBuildNumber;]$(Build.BuildNumber)"
+              $tag = "$(Build.BuildNumber)_$(Build.Reason)"
+              Write-Host "##vso[build.updatebuildnumber]$tag"
+            displayName: 'Set Build Number'
+          
+          - task: ShellScript@2
+            name: 'detect_change_types'
+            displayName:  Detect Incoming Code Changes (infra, app, source code, etc)
+            inputs:
+              scriptPath: pipelines/scripts/detectChangeTypes.sh
+
+          - task: Bash@3
+            displayName: 'Print Environment Variables'
+            inputs:
+              targetType: 'inline'
+              script: 'env | sort'
+
+  - stage: Deploy_Azure_Infra
+    condition: succeeded('Initialize')
+    displayName: Deploy Azure Infra
+    jobs:
+      - template: stages/deploy_azure_infra.yml
+        parameters:
+            vmImage: 'windows-latest'
